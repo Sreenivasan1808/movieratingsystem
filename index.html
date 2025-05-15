@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Rating System</title>
+    <link href="style.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="jquery-3.7.1.js"> </script>
+
+    <script type="text/javascript">
+   
+    $(document).ready(function() {
+   
+       $("#searchbtn").click(function(e) {  
+        e.preventDefault();     
+        let v = $("#mname").val();    
+        console.log(v);     
+   
+         $.ajax({    //create an ajax request to display.php
+           type: "GET",
+           url: "getmovies.php?q="+v,             
+           dataType: "html",   //expect html to be returned                
+           success: function(response){                    
+               $("#responsecontainer").html(response); 
+               //alert(response);
+           }
+   
+       });
+   });
+
+   $.ajax({    
+           type: "GET",
+           url: "topmovies.php",             
+           dataType: "html",                 
+           success: function(response){                    
+               $("#topmoviesTable").html(response); 
+               //alert(response);
+           }
+   
+       });
+   });
+   
+   </script>
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="titles">
+        <h1 id="maintitle">MOVIE RATING SYSTEM</h1>
+        <h2 id="subtitle">Help to Make Better Cinema</h2>
+      </div>
+      <img src="assets/projector.png" >
+    </div>
+    <div class="formContainer">
+      <h1 id="feedbackTitle">Provide Your Feedback</h1>
+      <form action="action.php" method="post">
+        <div class="row">
+          <div class="col-25">
+            <label for="fname" class="label">Full Name</label>
+          </div>
+          <div class="col-75">
+            <input
+              type="text"
+              id="fname"
+              name="fname"
+              placeholder="Your Full Name"
+            /><br />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="movie" class="label">Movie Name</label>
+          </div>
+          <div class="col-75">
+            <input
+              type="text"
+              id="movie"
+              name="movie"
+              placeholder="Movie name"
+            /><br />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="rating" class="label">Rating</label>
+          </div>
+          <div class="col-75">
+            <input type="number" id="rating" name="rating" min="1" max="5" placeholder="Rating">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="review" class="label">Review</label>
+          </div>
+          <div class="col-75">
+            <textarea
+              id="review"
+              name="review"
+              placeholder="Write your review"
+              style="height: 200px"
+            ></textarea>
+          </div>
+        </div>
+        <input type="submit" id="submit" name="submit"/><br />
+      </form>
+    </div>
+    
+    <div class="reportContainer">
+      <h1 id="reportTitle">See What Others Think</h1>
+      <form>
+        <div class="row">
+          <div class="col-25">
+            <label for="mname">Movie Name </label>
+          </div>
+          <div class="col-75">
+            <input type="text" id="mname" name="mname">
+          </div>
+        </div>
+        <div class="row">
+          <input type="submit" value="Search" id="searchbtn">
+        </div>
+      </form>
+      <div id="responsecontainer">
+
+      </div>
+    </div>
+    <div class="topMoviesContainer">
+      <h1 id="topTitle">List of Top Fan Favourite Movies</h1>
+      <div id="topmoviesTable">
+
+      </div>
+    </div>
+  </body>
+</html>
